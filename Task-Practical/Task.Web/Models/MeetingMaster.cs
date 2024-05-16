@@ -10,6 +10,7 @@
         public string MeetingDiscussion { get; set;}
         public string AttendsFromClientSide { get; set;}
         public string AttendsFromHostSide { get;set;}
+        public string MeetingDecision { get; set; }
 
         // Relationship with Customer
         public Guid CustomerId { get; set; }  // Foreign key

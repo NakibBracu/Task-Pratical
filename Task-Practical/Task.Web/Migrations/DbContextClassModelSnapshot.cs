@@ -63,6 +63,10 @@ namespace Task.Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MeetingDecision")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MeetingDiscussion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

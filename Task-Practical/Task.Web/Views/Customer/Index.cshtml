@@ -59,7 +59,7 @@
         </div>
 
         <!--Meeting Place and Decision-->
-        <div class="row">
+        <div class="row" style="margin-bottom:10px">
             <!-- Input for MeetingPlace -->
             <div class="col-md-6 d-flex align-items-center">
                 <label asp-for="MeetingPlace" class="required" style="margin-right: 8px;">Meeting Place:</label>
@@ -78,9 +78,42 @@
                 <span asp-validation-for="MeetingDiscussion" class="text-danger"></span>
             </div>
 
+        </div>
 
+        <!--Meeting Attendence Client Side and Decision-->
+        <div class="row" style="margin-bottom:10px">
+            <!-- Input for MeetingPlace -->
+            <div class="col-md-6 d-flex align-items-center">
+                <label asp-for="AttendsFromClientSide" class="required" style="margin-right: 8px;">Attends From Client Side:</label>
+                <div style="flex: 1;">
+                    <textarea asp-for="AttendsFromClientSide" class="form-control overflow-auto" style="height: auto; min-height: 38px;" aria-required="true" placeholder="Present Client Side" required></textarea>
+                </div>
+                <span asp-validation-for="AttendsFromClientSide" class="text-danger"></span>
+            </div>
+
+            <!-- Input for MeetingDecision -->
+            <div class="col-md-6 d-flex align-items-center">
+                <label asp-for="MeetingDecision" class="required" style="margin-right: 8px;">Meeting Decision:</label>
+                <div style="flex: 1;">
+                    <textarea asp-for="MeetingDecision" class="form-control overflow-auto" style="height: auto; min-height: 38px;" aria-required="true" placeholder="Meeting decision" required></textarea>
+                </div>
+                <span asp-validation-for="MeetingDecision" class="text-danger"></span>
+            </div>
 
         </div>
+
+        <div class="row" style="margin-bottom:10px">
+            <!-- Input for AttendsFromHosTside -->
+            <div class="col-md-6 d-flex align-items-center">
+                <label asp-for="AttendsFromHostSide" class="required" style="margin-right: 8px;">Attends From Host Side:</label>
+                <div style="flex: 1;">
+                    <textarea asp-for="AttendsFromHostSide" class="form-control overflow-auto" style="height: auto; min-height: 38px;" aria-required="true" placeholder="Present self side" required></textarea>
+                </div>
+                <span asp-validation-for="AttendsFromHostSide" class="text-danger"></span>
+            </div>
+
+        </div>
+
     </div>
 
 

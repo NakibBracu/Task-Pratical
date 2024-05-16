@@ -12,7 +12,7 @@ using Task.Web.Models.Dbcontext;
 namespace Task.Web.Migrations
 {
     [DbContext(typeof(DbContextClass))]
-    [Migration("20240516050215_init")]
+    [Migration("20240516114726_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -63,6 +63,10 @@ namespace Task.Web.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MeetingAgenda")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MeetingDecision")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

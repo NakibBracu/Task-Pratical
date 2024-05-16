@@ -15,9 +15,9 @@ namespace Task.Web.Services
             _dbContext = dbContextClass;
         }
 
-        public async Task<List<string>> GetCorporateCustomersName()
+        public async Task<List<Tuple<Guid, string>>> GetCorporateCustomersName()
         {
-            var customerNames = new List<string>();
+            var customerNames = new List<Tuple<Guid, string>>();
 
             try
             {
@@ -33,7 +33,10 @@ namespace Task.Web.Services
                     {
                         while (await reader.ReadAsync())
                         {
-                            customerNames.Add(reader.GetString(0));
+                            var id = reader.GetGuid(0);
+                            var name = reader.GetString(1);
+                            var tuple = Tuple.Create(id, name);
+                            customerNames.Add(tuple);
                         }
                     }
                 }
@@ -52,9 +55,10 @@ namespace Task.Web.Services
 
 
 
-        public async Task<List<string>> GetIndividualCustomersName()
+
+        public async Task<List<Tuple<Guid, string>>> GetIndividualCustomersName()
         {
-            var customerNames = new List<string>();
+            var customerNames = new List<Tuple<Guid, string>>();
 
             try
             {
@@ -70,7 +74,10 @@ namespace Task.Web.Services
                     {
                         while (await reader.ReadAsync())
                         {
-                            customerNames.Add(reader.GetString(0));
+                            var id = reader.GetGuid(0);
+                            var name = reader.GetString(1);
+                            var tuple = Tuple.Create(id, name);
+                            customerNames.Add(tuple);
                         }
                     }
                 }
@@ -86,6 +93,8 @@ namespace Task.Web.Services
 
             return customerNames;
         }
+
+
 
     }
 }

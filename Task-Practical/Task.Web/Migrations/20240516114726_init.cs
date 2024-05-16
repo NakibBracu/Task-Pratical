@@ -69,6 +69,7 @@ namespace Task.Web.Migrations
                     MeetingDiscussion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AttendsFromClientSide = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AttendsFromHostSide = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MeetingDecision = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

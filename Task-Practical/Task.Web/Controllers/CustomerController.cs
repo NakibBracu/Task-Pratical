@@ -20,7 +20,7 @@ namespace Task.Web.Controllers
         public async Task<IActionResult> GetCustomerNames(string customerType)
         {
             // Call your data access layer or service to retrieve customer names based on the customer type
-            List<string> customerNames = new List<string>();
+            var customerNames = new List<Tuple<Guid, string>>();
 
             // Populate customerNames based on the customerType
             if (customerType == "Corporate")
