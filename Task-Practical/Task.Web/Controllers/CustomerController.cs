@@ -9,9 +9,11 @@ namespace Task.Web.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerService _customerService;
-        public CustomerController(ICustomerService customerService)
+        private readonly IMeetingMasterService _meetingMasterService;
+        public CustomerController(ICustomerService customerService, IMeetingMasterService meetingMasterService)
         {
            _customerService = customerService;
+            _meetingMasterService = meetingMasterService;
         }
         public IActionResult Index()
         {
@@ -47,8 +49,8 @@ namespace Task.Web.Controllers
         }
 
         public async Task<IActionResult> SaveMeetingDetails(MeetingMaster meetingDetails) { 
-            
-            return View(meetingDetails);
+            await _meetingMasterService.AddMeetingDetailsAsync(meetingDetails);
+            return RedirectToAction("Index", "Home");
         }
 
     }
