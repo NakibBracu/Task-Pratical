@@ -20,27 +20,29 @@ namespace Task.Web.Controllers
         public async Task<IActionResult> GetCustomerNames(string customerType)
         {
             // Call your data access layer or service to retrieve customer names based on the customer type
-            var customerNames = new List<Tuple<Guid, string>>();
+            List<Tuple<Guid, string>> customerNames;
 
             // Populate customerNames based on the customerType
             if (customerType == "Corporate")
             {
-                var corporateCustName = await _customerService.GetCorporateCustomersName();
-                foreach (var c in corporateCustName) {
-                    customerNames.Add(c);
-                }
+                customerNames = await _customerService.GetCorporateCustomersName();
             }
             else if (customerType == "Individual")
             {
-                var IndividualCustName = await _customerService.GetIndividualCustomersName();
-                foreach (var c in IndividualCustName)
-                {
-                    customerNames.Add(c);
-                }
+                customerNames = await _customerService.GetIndividualCustomersName();
+            }
+            else
+            {
+                // Handle invalid customer type
+                return BadRequest("Invalid customer type.");
             }
 
+            // Convert customerNames to a format suitable for JSON serialization
+            var jsonData = customerNames.Select(customer => new[] { customer.Item1.ToString(), customer.Item2 });
+
             // Return customer names as JSON
-            return Json(customerNames);
+            return Json(jsonData);
         }
+
     }
 }

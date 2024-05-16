@@ -124,7 +124,6 @@
 
 @section Scripts {
     <script>
-        // Function to load customer names based on the selected radio button using AJAX
         function loadCustomerNames() {
             var customerType = document.querySelector('input[name="customerType"]:checked').value;
             var customerDropdown = document.getElementById("customerDropdown");
@@ -134,13 +133,14 @@
             fetch(`/Customer/GetCustomerNames?customerType=${customerType}`)
                 .then(response => response.json())
                 .then(data => {
-                    data.forEach(name => {
+                    data.forEach(customer => {
                         var option = document.createElement("option");
-                        option.text = name;
-                        option.value = name;
+                        option.text = customer[1]; // Accessing the name from the tuple
+                        option.value = customer[0]; // Accessing the ID from the tuple
                         customerDropdown.add(option);
                     });
-                });
+                })
+                .catch(error => console.error('Error fetching customer names:', error));
         }
 
         // Event listener to trigger loadCustomerNames function when radio buttons are changed
@@ -150,5 +150,6 @@
 
         // Initially load customer names based on the default selected radio button
         loadCustomerNames();
+
     </script>
 }
