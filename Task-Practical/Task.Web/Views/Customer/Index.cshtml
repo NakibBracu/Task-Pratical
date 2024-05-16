@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<form>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="customerType" id="corporateRadio" value="Corporate">
+        <label class="form-check-label" for="corporateRadio">
+            Corporate
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="customerType" id="individualRadio" value="Individual">
+        <label class="form-check-label" for="individualRadio">
+            Individual
+        </label>
+    </div>
+
+    <!-- Dropdown for CustomerName -->
+    <div class="form-group mt-3">
+        <label for="customerDropdown">Customer Name:</label>
+        <select class="form-control" id="customerDropdown" name="customerName">
+            <!-- Options will be populated dynamically using JavaScript -->
+        </select>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        // Function to load customer names based on the selected radio button using AJAX
+        function loadCustomerNames() {
+            var customerType = document.querySelector('input[name="customerType"]:checked').value;
+            var customerDropdown = document.getElementById("customerDropdown");
+            customerDropdown.innerHTML = ""; // Clear existing options
+
+            // Make an AJAX request to fetch customer names based on the selected radio button
+            fetch(`/Customer/GetCustomerNames?customerType=${customerType}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(name => {
+                        var option = document.createElement("option");
+                        option.text = name;
+                        option.value = name;
+                        customerDropdown.add(option);
+                    });
+                });
+        }
+
+        // Event listener to trigger loadCustomerNames function when radio buttons are changed
+        document.querySelectorAll('input[name="customerType"]').forEach(radio => {
+            radio.addEventListener("change", loadCustomerNames);
+        });
+
+        // Initially load customer names based on the default selected radio button
+        loadCustomerNames();
+    </script>
+}

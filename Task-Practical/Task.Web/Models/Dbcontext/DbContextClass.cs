@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
+
 namespace Task.Web.Models.Dbcontext
 {
     public class DbContextClass : DbContext
@@ -19,7 +20,7 @@ namespace Task.Web.Models.Dbcontext
 
         public DbSet<Customer> Customers { get; set; } // DbSet for Customer entity
         public DbSet<MeetingMaster> MeetingMasters { get; set; } // DbSet for MeetingMaster entity
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IndividualCustomer>().ToTable("Individual_Customer_Tbl");
