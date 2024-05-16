@@ -12,7 +12,7 @@ using Task.Web.Models.Dbcontext;
 namespace Task.Web.Migrations
 {
     [DbContext(typeof(DbContextClass))]
-    [Migration("20240516114726_init")]
+    [Migration("20240516152734_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -85,7 +85,7 @@ namespace Task.Web.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("MeetingMasters");
+                    b.ToTable("Meeting_Minutes_Master_Tbl", (string)null);
                 });
 
             modelBuilder.Entity("Task.Web.Models.CorporateCustomer", b =>

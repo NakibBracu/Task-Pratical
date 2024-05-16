@@ -23,6 +23,7 @@ namespace Task.Web.Models.Dbcontext
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<MeetingMaster>().ToTable("Meeting_Minutes_Master_Tbl"); // Renaming MeetingMasters table
             modelBuilder.Entity<IndividualCustomer>().ToTable("Individual_Customer_Tbl");
             modelBuilder.Entity<CorporateCustomer>().ToTable("Corporate_Customer_Tbl");
             modelBuilder.Entity<IndividualCustomer>().Property(c => c.Name).IsRequired();

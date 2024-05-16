@@ -58,7 +58,7 @@ namespace Task.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MeetingMasters",
+                name: "Meeting_Minutes_Master_Tbl",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -74,9 +74,9 @@ namespace Task.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MeetingMasters", x => x.Id);
+                    table.PrimaryKey("PK_Meeting_Minutes_Master_Tbl", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MeetingMasters_Customers_CustomerId",
+                        name: "FK_Meeting_Minutes_Master_Tbl_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
@@ -84,8 +84,8 @@ namespace Task.Web.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_MeetingMasters_CustomerId",
-                table: "MeetingMasters",
+                name: "IX_Meeting_Minutes_Master_Tbl_CustomerId",
+                table: "Meeting_Minutes_Master_Tbl",
                 column: "CustomerId");
         }
 
@@ -99,7 +99,7 @@ namespace Task.Web.Migrations
                 name: "Individual_Customer_Tbl");
 
             migrationBuilder.DropTable(
-                name: "MeetingMasters");
+                name: "Meeting_Minutes_Master_Tbl");
 
             migrationBuilder.DropTable(
                 name: "Customers");

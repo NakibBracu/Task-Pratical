@@ -29,7 +29,7 @@ namespace Task.Web.Services
                 parameter.Add(new SqlParameter("@Date", meetingdetails.Date));
                 parameter.Add(new SqlParameter("@Time", meetingdetails.Time));
 
-                await _dbContext.Database.ExecuteSqlRawAsync(@"exec AddMeetingDetails @MeetingPlace, @MeetingAgenda,@MeetingDiscussion,@AttendsFromClientSide,@AttendsFromHostSide,@MeetingDecision,@CustomerId,@Date,@Time", parameter.ToArray());
+                await _dbContext.Database.ExecuteSqlRawAsync(@"exec Meeting_Minutes_Master_Save_SP @MeetingPlace, @MeetingAgenda,@MeetingDiscussion,@AttendsFromClientSide,@AttendsFromHostSide,@MeetingDecision,@CustomerId,@Date,@Time", parameter.ToArray());
 
             }
             catch (Exception ex)

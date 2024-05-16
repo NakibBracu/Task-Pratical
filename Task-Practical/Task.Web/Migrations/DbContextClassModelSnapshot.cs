@@ -82,7 +82,7 @@ namespace Task.Web.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("MeetingMasters");
+                    b.ToTable("Meeting_Minutes_Master_Tbl", (string)null);
                 });
 
             modelBuilder.Entity("Task.Web.Models.CorporateCustomer", b =>
