@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using Task.Web.Models;
 using Task.Web.Services;
 
@@ -42,6 +44,11 @@ namespace Task.Web.Controllers
 
             // Return customer names as JSON
             return Json(jsonData);
+        }
+
+        public async Task<IActionResult> SaveMeetingDetails(MeetingMaster meetingDetails) { 
+            
+            return View(meetingDetails);
         }
 
     }

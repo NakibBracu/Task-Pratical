@@ -5,7 +5,11 @@
 
 <h1>Index</h1>
 
-<form>
+<form role="form" asp-antiforgery="true" asp-action="SaveMeetingDetails"
+      asp-area="" asp-controller="Customer" method="post">
+
+    <div class="card-body">
+        <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-check">
         <input class="form-check-input" type="radio" name="customerType" id="corporateRadio" value="Corporate">
         <label class="form-check-label" for="corporateRadio">
@@ -24,12 +28,13 @@
     <div class="form-group mt-3">
         <div class="row" style="margin-bottom:10px">
             <!-- Dropdown for CustomerName -->
-            <div class="col-md-6 d-flex align-items-center">
-                <label for="customerDropdown">Customer Name:</label>
-                <select class="form-control" id="customerDropdown" name="customerName">
-                    <!-- Options will be populated dynamically using JavaScript -->
-                </select>
-            </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <label for="customerDropdown">Customer Name:</label>
+                    <select class="form-control" id="customerDropdown" name="customerName">
+                        <!-- Options will be populated dynamically using JavaScript -->
+                    </select>
+                    <input type="hidden" id="customerId" name="customerId">
+                </div>
 
             <!-- Input for MeetingAgenda -->
             <div class="col-md-6 d-flex align-items-center">
@@ -116,7 +121,10 @@
 
     </div>
 
-
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
 
        
    
@@ -146,6 +154,13 @@
         // Event listener to trigger loadCustomerNames function when radio buttons are changed
         document.querySelectorAll('input[name="customerType"]').forEach(radio => {
             radio.addEventListener("change", loadCustomerNames);
+        });
+
+        // Event listener to set customerId when a customer is selected
+        document.getElementById("customerDropdown").addEventListener("change", function () {
+            var selectedCustomerId = this.value;
+            // console.log('Selected Customer ID:', selectedCustomerId); // Debugging: Log the selected customer ID
+            document.getElementById("customerId").value = selectedCustomerId;
         });
 
         // Initially load customer names based on the default selected radio button
