@@ -1,4 +1,4 @@
-﻿
+﻿@model MeetingMaster
 @{
     ViewData["Title"] = "Index";
 }
@@ -20,12 +20,73 @@
     </div>
 
     <!-- Dropdown for CustomerName -->
+    <!-- Container to hold both dropdown and MeetingAgenda input -->
     <div class="form-group mt-3">
-        <label for="customerDropdown">Customer Name:</label>
-        <select class="form-control" id="customerDropdown" name="customerName">
-            <!-- Options will be populated dynamically using JavaScript -->
-        </select>
+        <div class="row" style="margin-bottom:10px">
+            <!-- Dropdown for CustomerName -->
+            <div class="col-md-6 d-flex align-items-center">
+                <label for="customerDropdown">Customer Name:</label>
+                <select class="form-control" id="customerDropdown" name="customerName">
+                    <!-- Options will be populated dynamically using JavaScript -->
+                </select>
+            </div>
+
+            <!-- Input for MeetingAgenda -->
+            <div class="col-md-6 d-flex align-items-center">
+                <label asp-for="MeetingAgenda" class="required" style="margin-right: 8px;">Meeting Agenda:</label>
+                <div style="flex: 1;">
+                    <textarea asp-for="MeetingAgenda" class="form-control overflow-auto" style="height: auto; min-height: 38px;" aria-required="true" placeholder="Meeting Agenda" required></textarea>
+                </div>
+                <span asp-validation-for="MeetingAgenda" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <!--Date and Time-->
+        <div class="row" style="margin-bottom:10px">
+            <!-- Input for meetingDate -->
+            <div class="col-md-6 d-flex align-items-center">
+                <label asp-for="Date" class="required">Meeting Date:</label>
+                <input asp-for="Date" class="form-control" type="date" required />
+            </div>
+
+            <!-- Input for meetingTime -->
+            <div class="col-md-6 d-flex align-items-center">
+                <label asp-for="Time" class="required">Meeting Time:</label>
+                <input asp-for="Time" class="form-control" type="time" step="1800" required />
+            </div>
+
+        </div>
+
+        <!--Meeting Place and Decision-->
+        <div class="row">
+            <!-- Input for MeetingPlace -->
+            <div class="col-md-6 d-flex align-items-center">
+                <label asp-for="MeetingPlace" class="required" style="margin-right: 8px;">Meeting Place:</label>
+                <div style="flex: 1;">
+                    <textarea asp-for="MeetingPlace" class="form-control overflow-auto" style="height: auto; min-height: 38px;" aria-required="true" placeholder="Meeting Place" required></textarea>
+                </div>
+                <span asp-validation-for="MeetingPlace" class="text-danger"></span>
+            </div>
+
+            <!-- Input for MeetingDiscussion -->
+            <div class="col-md-6 d-flex align-items-center">
+                <label asp-for="MeetingDiscussion" class="required" style="margin-right: 8px;">Meeting Discussion:</label>
+                <div style="flex: 1;">
+                    <textarea asp-for="MeetingDiscussion" class="form-control overflow-auto" style="height: auto; min-height: 38px;" aria-required="true" placeholder="Meeting Discussion" required></textarea>
+                </div>
+                <span asp-validation-for="MeetingDiscussion" class="text-danger"></span>
+            </div>
+
+
+
+        </div>
     </div>
+
+
+
+       
+   
 </form>
 
 @section Scripts {

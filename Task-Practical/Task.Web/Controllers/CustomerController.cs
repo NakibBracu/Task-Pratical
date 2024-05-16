@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Task.Web.Models;
 using Task.Web.Services;
 
 namespace Task.Web.Controllers
@@ -12,7 +13,8 @@ namespace Task.Web.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var model = new MeetingMaster(); // Initialize a new MeetingMaster object
+            return View(model);
         }
 
         public async Task<IActionResult> GetCustomerNames(string customerType)
