@@ -10,10 +10,12 @@ namespace Task.Web.Controllers
     {
         private readonly ICustomerService _customerService;
         private readonly IMeetingMasterService _meetingMasterService;
-        public CustomerController(ICustomerService customerService, IMeetingMasterService meetingMasterService)
+        private readonly IPSService _pSService;
+        public CustomerController(ICustomerService customerService, IMeetingMasterService meetingMasterService, IPSService pSService)
         {
-           _customerService = customerService;
+            _customerService = customerService;
             _meetingMasterService = meetingMasterService;
+            _pSService = pSService;
         }
         public IActionResult Index()
         {
@@ -53,5 +55,18 @@ namespace Task.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+       
+        public async Task<IActionResult> GetProductorServices()
+        {
+             List<Tuple<Guid,string,int>> result = await _pSService.GetProductsOrServices();
+
+            
+          
+
+            return Ok(result);
+        }
+
+        
     }
 }

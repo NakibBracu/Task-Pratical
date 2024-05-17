@@ -16,6 +16,7 @@ try
     // Add services to the container.
     builder.Services.AddScoped<ICustomerService, CustomerService>();
     builder.Services.AddScoped<IMeetingMasterService, MeetingMasterService>();
+    builder.Services.AddScoped<IPSService, PSService>();
     builder.Services.AddDbContext<DbContextClass>();
     builder.Services.AddControllersWithViews();
 

@@ -24,6 +24,19 @@ namespace Task.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Products_Service_Tbl",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unit = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products_Service_Tbl", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Corporate_Customer_Tbl",
                 columns: table => new
                 {
@@ -83,6 +96,35 @@ namespace Task.Web.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CustomerProductorService",
+                columns: table => new
+                {
+                    customersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    productorServicesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerProductorService", x => new { x.customersId, x.productorServicesId });
+                    table.ForeignKey(
+                        name: "FK_CustomerProductorService_Customers_customersId",
+                        column: x => x.customersId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CustomerProductorService_Products_Service_Tbl_productorServicesId",
+                        column: x => x.productorServicesId,
+                        principalTable: "Products_Service_Tbl",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomerProductorService_productorServicesId",
+                table: "CustomerProductorService",
+                column: "productorServicesId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Meeting_Minutes_Master_Tbl_CustomerId",
                 table: "Meeting_Minutes_Master_Tbl",
@@ -96,10 +138,16 @@ namespace Task.Web.Migrations
                 name: "Corporate_Customer_Tbl");
 
             migrationBuilder.DropTable(
+                name: "CustomerProductorService");
+
+            migrationBuilder.DropTable(
                 name: "Individual_Customer_Tbl");
 
             migrationBuilder.DropTable(
                 name: "Meeting_Minutes_Master_Tbl");
+
+            migrationBuilder.DropTable(
+                name: "Products_Service_Tbl");
 
             migrationBuilder.DropTable(
                 name: "Customers");

@@ -12,7 +12,7 @@ using Task.Web.Models.Dbcontext;
 namespace Task.Web.Migrations
 {
     [DbContext(typeof(DbContextClass))]
-    [Migration("20240516152734_init")]
+    [Migration("20240517154526_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -24,6 +24,21 @@ namespace Task.Web.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CustomerProductorService", b =>
+                {
+                    b.Property<Guid>("customersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("productorServicesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("customersId", "productorServicesId");
+
+                    b.HasIndex("productorServicesId");
+
+                    b.ToTable("CustomerProductorService");
+                });
 
             modelBuilder.Entity("Task.Web.Models.Customer", b =>
                 {
@@ -88,6 +103,24 @@ namespace Task.Web.Migrations
                     b.ToTable("Meeting_Minutes_Master_Tbl", (string)null);
                 });
 
+            modelBuilder.Entity("Task.Web.Models.ProductorService", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Unit")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products_Service_Tbl", (string)null);
+                });
+
             modelBuilder.Entity("Task.Web.Models.CorporateCustomer", b =>
                 {
                     b.HasBaseType("Task.Web.Models.Customer");
@@ -100,6 +133,21 @@ namespace Task.Web.Migrations
                     b.HasBaseType("Task.Web.Models.Customer");
 
                     b.ToTable("Individual_Customer_Tbl", (string)null);
+                });
+
+            modelBuilder.Entity("CustomerProductorService", b =>
+                {
+                    b.HasOne("Task.Web.Models.Customer", null)
+                        .WithMany()
+                        .HasForeignKey("customersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Task.Web.Models.ProductorService", null)
+                        .WithMany()
+                        .HasForeignKey("productorServicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Task.Web.Models.MeetingMaster", b =>
