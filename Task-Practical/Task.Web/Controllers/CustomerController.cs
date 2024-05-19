@@ -22,7 +22,7 @@ namespace Task.Web.Controllers
         }
         public IActionResult Index()
         {
-            var model = new MeetingMaster(); // Initialize a new MeetingMaster object
+            var model = new MeetingCreateDTO(); // Initialize a new MeetingMaster object
             return View(model);
         }
 

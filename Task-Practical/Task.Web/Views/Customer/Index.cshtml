@@ -1,4 +1,5 @@
-﻿@model MeetingMaster
+﻿@using Task.Web.Models.DTO
+@model MeetingCreateDTO
 @{
     ViewData["Title"] = "Index";
 }
@@ -297,7 +298,7 @@
         <!-- #endregion -->
 
 
-
+            let meetingDetailsArray = []; // Global variable to store meeting details
            
 
             <!--Table Manipulation-->
@@ -311,6 +312,14 @@
             const selectedProductId = productDropdown.value;
             const quantity = document.getElementById('quantityField').value;
             const unit = document.getElementById('unitField').value;
+
+            const meetingDetails = {
+                ProductServiceId: selectedProductId,
+                Quantity: quantity
+            };
+
+            // Store the meeting details in the global array
+            meetingDetailsArray.push(meetingDetails);
 
             const tbody = document.getElementById('TBody');
             const templateRow = document.getElementById('TRow');
@@ -328,6 +337,7 @@
             document.getElementById('quantityField').value = '';
             document.getElementById('unitField').value = '';
         }
+
 
         function BtnDel(button) {
             const row = button.closest('tr');
@@ -360,6 +370,52 @@
         }
 
                 <!--Table Manipulation-- >
+
+                <!--Form-Submission-Handle-->
+
+            // // Handle form submission event
+            // document.querySelector('form').addEventListener('submit', function (event) {
+            //     event.preventDefault(); // Prevent default form submission
+
+            //     // Construct the meeting details JSON object
+            //     const meetingCreateDTO = {
+            //         CustomerId: document.getElementById('customerId').value,
+            //         Date: document.getElementById('Date').value,
+            //         Time: document.getElementById('Time').value,
+            //         MeetingPlace: document.getElementById('MeetingPlace').value,
+            //         MeetingAgenda: document.getElementById('MeetingAgenda').value,
+            //         MeetingDiscussion: document.getElementById('MeetingDiscussion').value,
+            //         AttendsFromClientSide: document.getElementById('AttendsFromClientSide').value,
+            //         AttendsFromHostSide: document.getElementById('AttendsFromHostSide').value,
+            //         MeetingDecision: document.getElementById('MeetingDecision').value,
+            //         meetingProductCreateDTOs: meetingDetailsArray
+            //     };
+
+            //     // Convert the meeting details object to JSON
+            //     const meetingJSON = JSON.stringify(meetingCreateDTO);
+
+            //     // Make a POST request to your server endpoint
+            //     fetch('/Meeting/AddMeeting', {
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         },
+            //         body: meetingJSON
+            //     })
+            //         .then(response => {
+            //             if (response.ok) {
+            //                 // Handle successful response
+            //             } else {
+            //                 throw new Error('Failed to save meeting details');
+            //             }
+            //         })
+            //         .catch(error => {
+            //             console.error('Error saving meeting details:', error);
+            //         });
+            // });
+
+            <!--Form - Submission - Handle-- >
+
 
     </script>
 }
