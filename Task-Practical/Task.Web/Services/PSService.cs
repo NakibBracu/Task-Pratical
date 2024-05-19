@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using Task.Web.Models.Dbcontext;
+using Task.Web.Models.DTO;
 
 namespace Task.Web.Services
 {
@@ -49,6 +51,25 @@ namespace Task.Web.Services
             }
 
             return customerNames;
+        }
+
+
+        public async ValueTask AddProductorService(ProductServiceRequest ps) {
+            try
+            {
+                var parameter = new List<SqlParameter>();
+
+                //parameter.Add(new SqlParameter("@CustomerId", ps.CustomerId));
+                //parameter.Add(new SqlParameter("@ProductorServiceId", ps.ProductorServiceId));
+                //parameter.Add(new SqlParameter("@Quantity", ps.Quantity));
+                
+                await _dbContext.Database.ExecuteSqlRawAsync(@"exec Meeting_Minutes_Details_Save_SP @CustomerId, @ProductorServiceId,@Quantity", parameter.ToArray());
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
     }
 }

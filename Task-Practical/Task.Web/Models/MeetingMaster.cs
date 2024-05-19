@@ -15,5 +15,7 @@
         // Relationship with Customer
         public Guid CustomerId { get; set; }  // Foreign key
         public Customer Customer { get; set; } // Navigation property
+
+        public IList<MeetingProductorService> meetingProductorServices { get; set; }
     }
 }

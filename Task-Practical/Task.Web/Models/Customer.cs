@@ -4,6 +4,6 @@
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public List<ProductorService>? productorServices { get; set; }
+        public IList<MeetingMaster> meetingMasters { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using Task.Web.Models;
+using Task.Web.Models.DTO;
 using Task.Web.Services;
 
 namespace Task.Web.Controllers
@@ -11,6 +12,8 @@ namespace Task.Web.Controllers
         private readonly ICustomerService _customerService;
         private readonly IMeetingMasterService _meetingMasterService;
         private readonly IPSService _pSService;
+
+        private IList<ProductServiceRequest> collectedProductsOrServices = new List<ProductServiceRequest>();
         public CustomerController(ICustomerService customerService, IMeetingMasterService meetingMasterService, IPSService pSService)
         {
             _customerService = customerService;
@@ -61,12 +64,23 @@ namespace Task.Web.Controllers
         {
              List<Tuple<Guid,string,int>> result = await _pSService.GetProductsOrServices();
 
-            
-          
-
             return Ok(result);
         }
 
-        
+        [HttpPost]
+        public async Task<IActionResult> AddSingleProductOrService([FromBody] ProductServiceRequest request)
+        {
+            //// Assuming ProductServiceRequest has properties for CustomerId and ProductorServiceId
+            //var customerId = request.CustomerId;
+            //var productorServiceId = request.ProductorServiceId;
+            //var quantity = request.Quantity;
+            //var unit = request.Unit;
+            // Adding the data to Meeting_Minutes_Details_Tbl
+            await _pSService.AddProductorService(request);
+            collectedProductsOrServices.Add(request);
+
+            return Ok(new { success = true, message = "Product or service added successfully" });
+        }
+
     }
 }

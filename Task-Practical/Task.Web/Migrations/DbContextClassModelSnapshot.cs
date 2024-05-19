@@ -22,21 +22,6 @@ namespace Task.Web.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CustomerProductorService", b =>
-                {
-                    b.Property<Guid>("customersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("productorServicesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("customersId", "productorServicesId");
-
-                    b.HasIndex("productorServicesId");
-
-                    b.ToTable("CustomerProductorService");
-                });
-
             modelBuilder.Entity("Task.Web.Models.Customer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -100,6 +85,30 @@ namespace Task.Web.Migrations
                     b.ToTable("Meeting_Minutes_Master_Tbl", (string)null);
                 });
 
+            modelBuilder.Entity("Task.Web.Models.MeetingProductorService", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MeetingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductorServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MeetingId");
+
+                    b.HasIndex("ProductorServiceId");
+
+                    b.ToTable("Meeting_Minutes_Details_Tbl", (string)null);
+                });
+
             modelBuilder.Entity("Task.Web.Models.ProductorService", b =>
                 {
                     b.Property<Guid>("Id")
@@ -132,30 +141,34 @@ namespace Task.Web.Migrations
                     b.ToTable("Individual_Customer_Tbl", (string)null);
                 });
 
-            modelBuilder.Entity("CustomerProductorService", b =>
-                {
-                    b.HasOne("Task.Web.Models.Customer", null)
-                        .WithMany()
-                        .HasForeignKey("customersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Task.Web.Models.ProductorService", null)
-                        .WithMany()
-                        .HasForeignKey("productorServicesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Task.Web.Models.MeetingMaster", b =>
                 {
                     b.HasOne("Task.Web.Models.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("meetingMasters")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Task.Web.Models.MeetingProductorService", b =>
+                {
+                    b.HasOne("Task.Web.Models.MeetingMaster", "MeetingMaster")
+                        .WithMany("meetingProductorServices")
+                        .HasForeignKey("MeetingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Task.Web.Models.ProductorService", "ProductorService")
+                        .WithMany()
+                        .HasForeignKey("ProductorServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MeetingMaster");
+
+                    b.Navigation("ProductorService");
                 });
 
             modelBuilder.Entity("Task.Web.Models.CorporateCustomer", b =>
@@ -174,6 +187,16 @@ namespace Task.Web.Migrations
                         .HasForeignKey("Task.Web.Models.IndividualCustomer", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Task.Web.Models.Customer", b =>
+                {
+                    b.Navigation("meetingMasters");
+                });
+
+            modelBuilder.Entity("Task.Web.Models.MeetingMaster", b =>
+                {
+                    b.Navigation("meetingProductorServices");
                 });
 #pragma warning restore 612, 618
         }
