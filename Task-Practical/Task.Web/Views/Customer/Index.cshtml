@@ -205,14 +205,31 @@
    
     <script>
         function loadCustomerNames() {
+            // Get the selected customer type from the radio buttons
             var customerType = document.querySelector('input[name="customerType"]:checked').value;
             var customerDropdown = document.getElementById("customerDropdown");
-            customerDropdown.innerHTML = ""; // Clear existing options
+
+            // Clear existing options in the dropdown
+            customerDropdown.innerHTML = "";
+
+            // Add a default option
+            var defaultOption = document.createElement("option");
+            defaultOption.text = "Select a customer";
+            defaultOption.value = "";
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            customerDropdown.add(defaultOption);
 
             // Make an AJAX request to fetch customer names based on the selected radio button
             fetch(`/Customer/GetCustomerNames?customerType=${customerType}`)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then(data => {
+                    // Iterate over the fetched customer data
                     data.forEach(customer => {
                         var option = document.createElement("option");
                         option.text = customer[1]; // Accessing the name from the tuple
@@ -231,12 +248,12 @@
         // Event listener to set customerId when a customer is selected
         document.getElementById("customerDropdown").addEventListener("change", function () {
             var selectedCustomerId = this.value;
-            // console.log('Selected Customer ID:', selectedCustomerId); // Debugging: Log the selected customer ID
             document.getElementById("customerId").value = selectedCustomerId;
         });
 
         // Initially load customer names based on the default selected radio button
-        loadCustomerNames();
+        loadCustomerNames(); // Uncomment this line if you want to load customers on page load
+
 
         <!-- #product_Load -->
 
@@ -244,7 +261,7 @@
                 // Define a variable to store the data
                 var productData;
 
-                // Function to populate the dropdown and unit field
+                // Function to populate the dropdown
                 function populateDropdown() {
                     $.ajax({
                         url: '/Customer/GetProductorServices', // Adjust the URL based on your routing configuration
@@ -255,13 +272,16 @@
                             var dropdown = $('#productorServiceDropdown');
                             dropdown.empty(); // Clear any existing options
 
+                            // Add a default option
+                            dropdown.append($('<option></option>').val('').text('Select a product/service').prop('disabled', true).prop('selected', true));
+
                             $.each(data, function (index, item) {
                                 dropdown.append(
                                     $('<option></option>').val(item.item1).text(item.item2) // Display product name in dropdown
                                 );
                             });
 
-                            // Trigger change event to update the unit field with the first option's unit
+                            // Trigger change event to update the hidden input and unit field
                             dropdown.trigger('change');
                         },
                         error: function (error) {
@@ -270,10 +290,10 @@
                     });
                 }
 
-                // Call the function to populate the dropdown and unit field on page load
+                // Call the function to populate the dropdown on page load
                 populateDropdown();
 
-                // Optional: Handle selection change to update the hidden input and unit field
+                // Handle selection change to update the hidden input and unit field
                 $('#productorServiceDropdown').change(function () {
                     var selectedOption = $(this).val();
                     $('#productId').val(selectedOption);
@@ -293,6 +313,7 @@
                     $('#unitField').val(selectedUnit || ''); // Use empty string if unit is not found
                 });
             });
+
 
 
         <!-- #endregion -->
